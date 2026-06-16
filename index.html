@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bingo weselne</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <p class="eyebrow">Zabawa dla gości</p>
+      <h1>Bingo weselne</h1>
+      <p class="lead">
+        Wykonaj zadania, zrób zdjęcia i zbierz 4 pola w jednej linii:
+        poziomo, pionowo albo po skosie.
+      </p>
+    </section>
+
+    <section class="guest-card">
+      <label>
+        Twoje imię / nazwa drużyny
+        <input id="guestName" type="text" placeholder="np. Stolik 5" autocomplete="name" />
+      </label>
+
+      <label>
+        Numer stołu
+        <input id="tableNumber" type="text" placeholder="np. 5" inputmode="numeric" />
+      </label>
+    </section>
+
+    <section class="status-card">
+      <div>
+        <strong id="completedCount">0/16</strong>
+        <span>wykonanych zadań</span>
+      </div>
+      <div>
+        <strong id="bingoStatus">Jeszcze bez bingo</strong>
+        <span>status gry</span>
+      </div>
+    </section>
+
+    <section id="board" class="board" aria-label="Plansza bingo"></section>
+
+    <section class="rules">
+      <h2>Zasady</h2>
+      <p>
+        Kliknij wybrane pole, dodaj zdjęcie i zapisz zadanie.
+        Kiedy zbierzesz pełną linię 4 pól, zgłoś się do prowadzącego.
+      </p>
+    </section>
+  </main>
+
+  <dialog id="taskDialog" class="dialog">
+    <form method="dialog" class="dialog-inner">
+      <button class="close" value="cancel" aria-label="Zamknij">×</button>
+      <h2 id="dialogTitle">Zadanie</h2>
+      <p id="dialogDescription"></p>
+
+      <label>
+        Dodaj zdjęcie
+        <input id="photoInput" type="file" accept="image/*" capture="environment" />
+      </label>
+
+      <img id="preview" class="preview" alt="Podgląd zdjęcia" hidden />
+
+      <menu class="dialog-actions">
+        <button id="saveTask" type="button" class="primary">Zapisz zadanie</button>
+        <button type="submit">Anuluj</button>
+      </menu>
+
+      <p id="uploadMessage" class="message"></p>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
