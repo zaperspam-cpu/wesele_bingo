@@ -1,15 +1,17 @@
-// 1. Wklej swoje dane z Supabase:
-// Supabase → Project Settings → API
-const SUPABASE_URL = "WKLEJ_TUTAJ_PROJECT_URL";
-const SUPABASE_ANON_KEY = "WKLEJ_TUTAJ_ANON_PUBLIC_KEY";
+// =======================================================
+// KONFIGURACJA SUPABASE
+// Wklej swoje dane z Supabase → Project Settings → API
+// =======================================================
 
-// 2. Nazwa bucketu ze zdjęciami w Supabase Storage
-const STORAGE_BUCKET = "Wesele_AL_2026";
+const SUPABASE_URL = "https://pesjyqlzqujcxwkpexhq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlc2p5cWx6cXVqY3h3a3BleGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MzA1NDUsImV4cCI6MjA5NzIwNjU0NX0.A7n6sxXXfELmHphz73Hy4GnplohLyvX4OFVZAfxexy0";
 
-// 3. Nazwa tabeli w bazie Supabase
+const STORAGE_BUCKET = "wedding-photos";
 const TABLE_NAME = "wedding_tasks";
 
-const supabaseClient = supabase.createClient(https://pesjyqlzqujcxwkpexhq.supabase.co, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlc2p5cWx6cXVqY3h3a3BleGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MzA1NDUsImV4cCI6MjA5NzIwNjU0NX0.A7n6sxXXfELmHphz73Hy4GnplohLyvX4OFVZAfxexy0);
+// =======================================================
+// ZADANIA BINGO 4x4
+// =======================================================
 
 const tasks = [
   "Zdjęcie z Panem Młodym",
@@ -46,6 +48,28 @@ const uploadMessage = document.querySelector("#uploadMessage");
 
 let selectedTaskIndex = null;
 let completed = JSON.parse(localStorage.getItem("weddingBingoCompleted") || "[]");
+
+function isSupabaseConfigured() {
+  return (
+    SUPABASE_URL.startsWith("https://") &&
+    SUPABASE_URL.includes(".supabase.co") &&
+    SUPABASE_ANON_KEY.length > 40 &&
+    !SUPABASE_URL.includes("WKLEJ") &&
+    !SUPABASE_ANON_KEY.includes("WKLEJ")
+  );
+}
+
+function getSupabaseClient() {
+  if (!isSupabaseConfigured()) {
+    return null;
+  }
+
+  if (!window.supabase) {
+    return null;
+  }
+
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 function renderBoard() {
   board.innerHTML = "";
@@ -105,8 +129,11 @@ saveTask.addEventListener("click", async () => {
       return;
     }
 
-    if (SUPABASE_URL.includes("WKLEJ") || SUPABASE_ANON_KEY.includes("WKLEJ")) {
-      uploadMessage.textContent = "Brakuje danych Supabase w pliku app.js.";
+    const supabaseClient = getSupabaseClient();
+
+    if (!supabaseClient) {
+      uploadMessage.textContent =
+        "Plansza działa, ale brakuje poprawnych danych Supabase w app.js.";
       return;
     }
 
@@ -124,9 +151,7 @@ saveTask.addEventListener("click", async () => {
         upsert: false
       });
 
-    if (uploadError) {
-      throw uploadError;
-    }
+    if (uploadError) throw uploadError;
 
     const { data: publicData } = supabaseClient.storage
       .from(STORAGE_BUCKET)
@@ -143,15 +168,9 @@ saveTask.addEventListener("click", async () => {
         photo_url: photoUrl
       });
 
-    if (insertError) {
-      throw insertError;
-    }
+    if (insertError) throw insertError;
 
-    if (!completed.includes(selectedTaskIndex)) {
-      completed.push(selectedTaskIndex);
-      localStorage.setItem("weddingBingoCompleted", JSON.stringify(completed));
-    }
-
+    markTaskAsCompleted(selectedTaskIndex);
     uploadMessage.textContent = "Zapisane!";
 
     setTimeout(() => {
@@ -162,18 +181,21 @@ saveTask.addEventListener("click", async () => {
   } catch (error) {
     console.error(error);
     saveTask.disabled = false;
-    uploadMessage.textContent = "Błąd zapisu. Sprawdź konfigurację Supabase.";
+    uploadMessage.textContent =
+      "Błąd zapisu. Sprawdź bucket, tabelę i uprawnienia w Supabase.";
   }
 });
 
+function markTaskAsCompleted(index) {
+  if (!completed.includes(index)) {
+    completed.push(index);
+    localStorage.setItem("weddingBingoCompleted", JSON.stringify(completed));
+  }
+}
+
 function updateStatus() {
   completedCount.textContent = `${completed.length}/16`;
-
-  if (hasBingo()) {
-    bingoStatus.textContent = "BINGO!";
-  } else {
-    bingoStatus.textContent = "Jeszcze bez bingo";
-  }
+  bingoStatus.textContent = hasBingo() ? "BINGO!" : "Jeszcze bez bingo";
 }
 
 function hasBingo() {

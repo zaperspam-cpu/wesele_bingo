@@ -1,20 +1,24 @@
-# Bingo weselne 4x4
+# Bingo weselne 4x4 — wersja poprawiona
 
-Prosta aplikacja webowa do weselnego bingo ze zdjęciami.
+Ta wersja wyświetla planszę bingo nawet wtedy, gdy dane Supabase nie są jeszcze wklejone.
 
-## Pliki
+## Co trzeba wkleić w `app.js`
 
-- `index.html` — struktura strony
-- `style.css` — wygląd
-- `app.js` — logika bingo i upload do Supabase
+```js
+const SUPABASE_URL = "TWÓJ_PROJECT_URL";
+const SUPABASE_ANON_KEY = "TWÓJ_ANON_PUBLIC_KEY";
+```
 
-## Konfiguracja Supabase
+Dane znajdziesz w Supabase:
 
-1. Utwórz projekt w Supabase.
-2. Storage → utwórz bucket:
-   `wedding-photos`
-3. Ustaw bucket jako publiczny.
-4. SQL Editor → wykonaj:
+Project Settings → API
+
+Używaj tylko klucza publicznego / anon / publishable.
+Nie używaj service_role.
+
+## Supabase — tabela
+
+SQL Editor:
 
 ```sql
 create table wedding_tasks (
@@ -27,17 +31,12 @@ create table wedding_tasks (
 );
 ```
 
-5. W pliku `app.js` wklej:
+## Supabase — Storage
 
-```js
-const SUPABASE_URL = "TWÓJ_PROJECT_URL";
-const SUPABASE_ANON_KEY = "TWÓJ_ANON_PUBLIC_KEY";
+Storage → New bucket:
+
+```text
+wedding-photos
 ```
 
-## GitHub Pages
-
-Wrzuć pliki do repozytorium GitHub, potem:
-
-Settings → Pages → Deploy from branch → `main` / `/root`
-
-Po chwili strona będzie dostępna publicznie.
+Na start ustaw jako publiczny.

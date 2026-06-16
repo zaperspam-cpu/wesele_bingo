@@ -11,9 +11,7 @@
   --radius: 22px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -30,10 +28,7 @@ body {
   padding: 28px 16px 56px;
 }
 
-.hero {
-  text-align: center;
-  margin-bottom: 22px;
-}
+.hero { text-align: center; margin-bottom: 22px; }
 
 .eyebrow {
   text-transform: uppercase;
@@ -56,10 +51,7 @@ h1 {
   font-size: 1.05rem;
 }
 
-.guest-card,
-.status-card,
-.rules,
-.dialog-inner {
+.guest-card, .status-card, .rules, .dialog-inner {
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(185, 131, 90, 0.18);
   border-radius: var(--radius);
@@ -98,19 +90,9 @@ input {
   margin-bottom: 18px;
 }
 
-.status-card div {
-  display: grid;
-  gap: 2px;
-}
-
-.status-card strong {
-  font-size: 1.2rem;
-}
-
-.status-card span {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
+.status-card div { display: grid; gap: 2px; }
+.status-card strong { font-size: 1.2rem; }
+.status-card span { color: var(--muted); font-size: 0.9rem; }
 
 .board {
   display: grid;
@@ -133,9 +115,7 @@ input {
   position: relative;
 }
 
-.tile:hover {
-  transform: translateY(-2px);
-}
+.tile:hover { transform: translateY(-2px); }
 
 .tile.done {
   background: var(--done);
@@ -151,19 +131,9 @@ input {
   color: #347834;
 }
 
-.rules {
-  margin-top: 18px;
-  padding: 18px;
-}
-
-.rules h2 {
-  margin: 0 0 8px;
-}
-
-.rules p {
-  color: var(--muted);
-  margin: 0;
-}
+.rules { margin-top: 18px; padding: 18px; }
+.rules h2 { margin: 0 0 8px; }
+.rules p { color: var(--muted); margin: 0; }
 
 .dialog {
   width: min(520px, calc(100% - 24px));
@@ -172,14 +142,9 @@ input {
   background: transparent;
 }
 
-.dialog::backdrop {
-  background: rgba(30, 20, 14, 0.48);
-}
+.dialog::backdrop { background: rgba(30, 20, 14, 0.48); }
 
-.dialog-inner {
-  padding: 22px;
-  position: relative;
-}
+.dialog-inner { padding: 22px; position: relative; }
 
 .close {
   position: absolute;
@@ -215,29 +180,24 @@ button {
   cursor: pointer;
 }
 
-.primary {
-  background: var(--accent);
-  color: #fff;
-}
-
-.message {
-  min-height: 1.4em;
-  color: var(--muted);
-}
+.primary { background: var(--accent); color: #fff; }
+.message { min-height: 1.4em; color: var(--muted); }
 
 @media (max-width: 700px) {
-  .guest-card,
-  .status-card {
-    grid-template-columns: 1fr;
-  }
-
-  .board {
-    gap: 8px;
-  }
-
+  .guest-card, .status-card { grid-template-columns: 1fr; }
+  .board { gap: 8px; }
   .tile {
     min-height: 112px;
     padding: 11px 8px;
     font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .app { padding-left: 10px; padding-right: 10px; }
+  .tile {
+    min-height: 96px;
+    font-size: 0.78rem;
+    border-radius: 14px;
   }
 }
