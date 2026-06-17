@@ -2,71 +2,85 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Bingo weselne</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="app">
     <section class="hero">
-      <p class="eyebrow">Zabawa dla gości</p>
-      <h1>Bingo weselne</h1>
+      <div class="leaf leaf-left" aria-hidden="true"></div>
+      <div class="leaf leaf-right" aria-hidden="true"></div>
+
+      <p class="eyebrow">Zabawa weselna</p>
+      <h1>Bingo<br />weselne</h1>
       <p class="lead">
-        Wykonaj zadania, zrób zdjęcia i zbierz 4 pola w jednej linii:
-        poziomo, pionowo albo po skosie.
+        Zbierz jako pierwszy całą planszę, aby otrzymać nagrodę.
       </p>
     </section>
 
-    <section class="guest-card">
-      <label>
-        Twoje imię / nazwa drużyny
-        <input id="guestName" type="text" placeholder="np. Stolik 5" autocomplete="name" />
-      </label>
-
-      <label>
-        Numer stołu
-        <input id="tableNumber" type="text" placeholder="np. 5" inputmode="numeric" />
-      </label>
+    <section id="nameCard" class="name-card">
+      <label for="fullName">Imię i nazwisko</label>
+      <div class="name-row">
+        <input id="fullName" type="text" placeholder="np. Anna Kowalska" autocomplete="name" />
+        <button id="saveName" type="button">Zapisz</button>
+      </div>
+      <p id="nameHelp" class="help">
+        Imię i nazwisko zapisze się na tym telefonie i nie będzie można go później zmienić.
+      </p>
     </section>
 
-    <section class="status-card">
+    <section class="progress-card">
       <div>
-        <strong id="completedCount">0/16</strong>
+        <strong id="completedCount">0/9</strong>
         <span>wykonanych zadań</span>
       </div>
       <div>
-        <strong id="bingoStatus">Jeszcze bez bingo</strong>
-        <span>status gry</span>
+        <strong id="boardStatus">Do dzieła!</strong>
+        <span>status planszy</span>
       </div>
     </section>
 
+    <p class="instruction">Dodaj zdjęcie:</p>
+
     <section id="board" class="board" aria-label="Plansza bingo"></section>
 
-    <section class="rules">
-      <h2>Zasady</h2>
-      <p>
-        Kliknij wybrane pole, dodaj zdjęcie i zapisz zadanie.
-        Kiedy zbierzesz pełną linię 4 pól, zgłoś się do prowadzącego.
-      </p>
-    </section>
+    <p class="finish-note">
+      Wszystkie zebrane? Poinformuj o tym Państwa Młodych!
+    </p>
+
+    <button id="resetButton" class="reset-button" type="button">
+      Rozpocznij od nowa
+    </button>
   </main>
 
   <dialog id="taskDialog" class="dialog">
     <form method="dialog" class="dialog-inner">
       <button class="close" value="cancel" aria-label="Zamknij">×</button>
-      <h2 id="dialogTitle">Zadanie</h2>
-      <p id="dialogDescription"></p>
 
-      <label>
-        Dodaj zdjęcie
-        <input id="photoInput" type="file" accept="image/*" capture="environment" />
-      </label>
+      <p class="dialog-label">Zadanie</p>
+      <h2 id="dialogTitle">Zadanie</h2>
+      <p id="dialogDescription">
+        Dodaj zdjęcie wykonane aparatem albo wybierz je z galerii.
+      </p>
+
+      <div class="upload-options">
+        <label class="upload-choice">
+          <span>Zrób zdjęcie</span>
+          <input id="cameraInput" type="file" accept="image/*" capture="environment" />
+        </label>
+
+        <label class="upload-choice">
+          <span>Wybierz z galerii</span>
+          <input id="galleryInput" type="file" accept="image/*" />
+        </label>
+      </div>
 
       <img id="preview" class="preview" alt="Podgląd zdjęcia" hidden />
 
       <menu class="dialog-actions">
         <button id="saveTask" type="button" class="primary">Zapisz zadanie</button>
-        <button type="submit">Anuluj</button>
+        <button type="submit" class="secondary">Anuluj</button>
       </menu>
 
       <p id="uploadMessage" class="message"></p>
