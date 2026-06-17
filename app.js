@@ -14,14 +14,14 @@ const TABLE_NAME = "wedding_tasks";
 
 const tasks = [
   "Z Parą Młodą",
-  "Pierwszy taniec",
-  "Uśmiechający się gość",
-  "Tańcząca para gości",
-  "Krojenie tortu",
-  "Wspólny toast przy stoliku",
-  "Pocałunek Państwa Młodych",
+  "Pierwszego tańca",
+  "Uśmiechającego się gościa",
+  "Tańczącej pary gości",
+  "Krojenia tortu",
+  "Wspólnego toastu przy stoliku",
+  "Pocałunku Państwa Młodych",
   "Selfie z gośćmi z Twojego stolika",
-  "Śmieszna mina albo poza"
+  "Śmiesznej mina albo poza"
 ];
 
 const STORAGE_KEYS = {
