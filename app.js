@@ -21,7 +21,7 @@ const tasks = [
   "Wspólnego toastu przy stoliku",
   "Pocałunku Państwa Młodych",
   "Selfie z gośćmi z Twojego stolika",
-  "Śmiesznej mina albo poza"
+  "Śmiesznej miny albo poza"
 ];
 
 const STORAGE_KEYS = {
